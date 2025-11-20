@@ -22,7 +22,12 @@ audio.volume = savedVolume / 100;
 // Restore position and song
 let song;
 fetch('/assets/music/song.json')
-  .then(res => res.json())
+  .then(res => {
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+    return res.json();
+  })
   .then(data => {
     const today = new Date().getDate();
     song = data[today % data.length];
@@ -48,6 +53,11 @@ fetch('/assets/music/song.json')
     } else {
       playBtn.innerHTML = playIcon;
     }
+  })
+  .catch(error => {
+    console.error('Failed to load song:', error);
+    songTitle.textContent = 'Failed to load song';
+    playBtn.innerHTML = playIcon;
   });
 
 // Play/Pause toggle
