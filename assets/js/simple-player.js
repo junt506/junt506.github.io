@@ -63,9 +63,26 @@ fetch('/assets/music/song.json')
 // Play/Pause toggle
 playBtn.addEventListener('click', () => {
   if (audio.paused) {
-    audio.play();
-    playBtn.innerHTML = pauseIcon;
-    localStorage.setItem('player-was-playing', 'true');
+    // Check if audio source is loaded
+    if (!audio.src) {
+      console.error('No audio source loaded');
+      songTitle.textContent = 'No audio source loaded';
+      return;
+    }
+
+    const playPromise = audio.play();
+
+    if (playPromise !== undefined) {
+      playPromise.then(() => {
+        playBtn.innerHTML = pauseIcon;
+        localStorage.setItem('player-was-playing', 'true');
+      }).catch(error => {
+        console.error('Play failed:', error);
+        songTitle.textContent = `Play failed: ${error.message}`;
+        playBtn.innerHTML = playIcon;
+        localStorage.setItem('player-was-playing', 'false');
+      });
+    }
   } else {
     audio.pause();
     playBtn.innerHTML = playIcon;
