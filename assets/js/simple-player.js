@@ -33,61 +33,27 @@ function initializePlayer() {
   if (isInitialized) return;
   isInitialized = true;
 
-  // Restore position and song with timeout
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+  // TESTING: Hardcode a song first to see if mobile audio works at all
+  song = {
+    title: "Money",
+    author: "Anitek",
+    audio: "https://f004.backblazeb2.com/file/qewavetunes/Money.mp3"
+  };
 
-  fetch('/assets/music/song.json', { signal: controller.signal })
-  .then(res => {
-    clearTimeout(timeoutId);
-    if (!res.ok) {
-      throw new Error(`HTTP ${res.status}`);
-    }
-    return res.json();
-  })
-  .then(data => {
-    const today = new Date().getDate();
-    song = data[today % data.length];
-    audio.src = song.audio;
-    songTitle.textContent = `${song.title} — ${song.author}`;
+  audio.src = song.audio;
+  songTitle.textContent = `${song.title} — ${song.author}`;
+  playBtn.innerHTML = playIcon;
 
-    const savedTime = localStorage.getItem('player-time');
-    const savedSrc = localStorage.getItem('player-src');
+  // Test: try to load the audio
+  audio.load();
 
-    if (savedSrc === song.audio && savedTime) {
-      audio.currentTime = parseFloat(savedTime);
-    }
+  audio.addEventListener('loadeddata', () => {
+    console.log('Audio loaded successfully on mobile!');
+  });
 
-    // Try to autoplay if browser allows
-    const shouldResume = localStorage.getItem('player-was-playing') === 'true';
-    if (shouldResume) {
-      audio.play().then(() => {
-        playBtn.innerHTML = pauseIcon;
-      }).catch(() => {
-        playBtn.innerHTML = playIcon;
-        localStorage.setItem('player-was-playing', 'false');
-      });
-    } else {
-      playBtn.innerHTML = playIcon;
-    }
-  })
-  .catch(error => {
-    clearTimeout(timeoutId);
-    console.error('Failed to load song:', error);
-    if (error.name === 'AbortError') {
-      songTitle.textContent = 'Load timeout - tap to retry';
-    } else {
-      songTitle.textContent = `Error: ${error.message}`;
-    }
-    playBtn.innerHTML = playIcon;
-
-    // Allow retry on button click
-    playBtn.addEventListener('click', () => {
-      if (!song) {
-        songTitle.textContent = 'Reloading...';
-        location.reload();
-      }
-    }, { once: true });
+  audio.addEventListener('error', (e) => {
+    console.error('Audio error:', e);
+    songTitle.textContent = 'Audio failed to load';
   });
 }
 
