@@ -5,6 +5,7 @@ const seek = document.getElementById('seek');
 const time = document.getElementById('time');
 const volume = document.getElementById('volume');
 const songTitle = document.getElementById('song-title');
+const audioPlayer = document.getElementById('audio-player');
 
 // SVG icons
 const playIcon = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`;
@@ -19,12 +20,24 @@ if (savedVolume === null) {
 volume.value = savedVolume;
 audio.volume = savedVolume / 100;
 
-// Restore position and song with timeout
-let song;
-const controller = new AbortController();
-const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+// Check if player is visible
+function isPlayerVisible() {
+  return audioPlayer && audioPlayer.offsetParent !== null;
+}
 
-fetch('/assets/music/song.json', { signal: controller.signal })
+// Initialize player function
+let song;
+let isInitialized = false;
+
+function initializePlayer() {
+  if (isInitialized) return;
+  isInitialized = true;
+
+  // Restore position and song with timeout
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+
+  fetch('/assets/music/song.json', { signal: controller.signal })
   .then(res => {
     clearTimeout(timeoutId);
     if (!res.ok) {
@@ -76,6 +89,26 @@ fetch('/assets/music/song.json', { signal: controller.signal })
       }
     }, { once: true });
   });
+}
+
+// Initialize player immediately if visible, otherwise wait
+if (isPlayerVisible()) {
+  initializePlayer();
+} else {
+  // Use IntersectionObserver to detect when player becomes visible
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !isInitialized) {
+        initializePlayer();
+        observer.disconnect();
+      }
+    });
+  }, { threshold: 0.1 });
+
+  if (audioPlayer) {
+    observer.observe(audioPlayer);
+  }
+}
 
 // Play/Pause toggle
 playBtn.addEventListener('click', () => {
