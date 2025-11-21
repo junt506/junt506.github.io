@@ -19,12 +19,16 @@ if (savedVolume === null) {
 volume.value = savedVolume;
 audio.volume = savedVolume / 100;
 
-// Restore position and song
+// Restore position and song with timeout
 let song;
-fetch('/assets/music/song.json')
+const controller = new AbortController();
+const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+
+fetch('/assets/music/song.json', { signal: controller.signal })
   .then(res => {
+    clearTimeout(timeoutId);
     if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status}`);
+      throw new Error(`HTTP ${res.status}`);
     }
     return res.json();
   })
@@ -55,9 +59,22 @@ fetch('/assets/music/song.json')
     }
   })
   .catch(error => {
+    clearTimeout(timeoutId);
     console.error('Failed to load song:', error);
-    songTitle.textContent = 'Failed to load song';
+    if (error.name === 'AbortError') {
+      songTitle.textContent = 'Load timeout - tap to retry';
+    } else {
+      songTitle.textContent = `Error: ${error.message}`;
+    }
     playBtn.innerHTML = playIcon;
+
+    // Allow retry on button click
+    playBtn.addEventListener('click', () => {
+      if (!song) {
+        songTitle.textContent = 'Reloading...';
+        location.reload();
+      }
+    }, { once: true });
   });
 
 // Play/Pause toggle
