@@ -13,139 +13,11 @@ order: 4
     overflow: hidden;
     padding: 2rem;
     min-height: 100vh;
-    background: #000;
   }
 
-  /* Multiple background layers for depth */
-  .bg-layer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-  }
 
-  .bg-layer.stars {
-    background-image: 
-      radial-gradient(2px 2px at 20px 30px, #eee, transparent),
-      radial-gradient(2px 2px at 40px 70px, #eee, transparent),
-      radial-gradient(1px 1px at 50px 90px, #eee, transparent),
-      radial-gradient(1px 1px at 130px 80px, #eee, transparent),
-      radial-gradient(2px 2px at 200px 10px, #eee, transparent);
-    background-repeat: repeat;
-    background-size: 250px 250px;
-    animation: stars-move 200s linear infinite;
-    opacity: 0.5;
-    z-index: 1;
-  }
-
-  @keyframes stars-move {
-    from { transform: translateY(0); }
-    to { transform: translateY(-2000px); }
-  }
-
-  .bg-layer.gradient {
-    background: linear-gradient(to bottom, 
-      rgba(10, 10, 10, 0.8) 0%, 
-      rgba(26, 0, 51, 0.8) 50%, 
-      rgba(45, 27, 105, 0.8) 100%);
-    z-index: 1;
-  }
-
-  .bg-layer.grid {
-    background-image: 
-      linear-gradient(rgba(174, 129, 255, 0.1) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(174, 129, 255, 0.1) 1px, transparent 1px);
-    background-size: 50px 50px;
-    transform: perspective(500px) rotateX(60deg) translateY(50%);
-    animation: grid-move 20s linear infinite;
-    z-index: 2;
-  }
-
-  @keyframes grid-move {
-    from { transform: perspective(500px) rotateX(60deg) translateY(50%) translateZ(0); }
-    to { transform: perspective(500px) rotateX(60deg) translateY(50%) translateZ(100px); }
-  }
-
-  /* VHS Distortion Effect */
-  @keyframes vhs-distortion {
-    0%, 100% { 
-      transform: translateX(0);
-      filter: hue-rotate(0deg);
-    }
-    20% {
-      transform: translateX(-2px);
-      filter: hue-rotate(90deg);
-    }
-    40% {
-      transform: translateX(2px);
-      filter: hue-rotate(180deg);
-    }
-    60% {
-      transform: translateX(-1px);
-      filter: hue-rotate(270deg);
-    }
-    80% {
-      transform: translateX(1px);
-      filter: hue-rotate(360deg);
-    }
-  }
-
-  /* Glitch Effect Enhanced */
-  @keyframes glitch {
-    0%, 100% { 
-      text-shadow: 
-        0.05em 0 0 rgba(255, 0, 0, .75),
-        -0.025em -0.05em 0 rgba(0, 255, 0, .75),
-        0.025em 0.05em 0 rgba(0, 0, 255, .75);
-    }
-    14% {
-      text-shadow: 
-        0.05em 0 0 rgba(255, 0, 0, .75),
-        -0.05em -0.025em 0 rgba(0, 255, 0, .75),
-        0.025em 0.05em 0 rgba(0, 0, 255, .75);
-    }
-    15% {
-      text-shadow: 
-        -0.05em -0.025em 0 rgba(255, 0, 0, .75),
-        0.025em 0.025em 0 rgba(0, 255, 0, .75),
-        -0.05em -0.05em 0 rgba(0, 0, 255, .75);
-    }
-    49% {
-      text-shadow: 
-        -0.05em -0.025em 0 rgba(255, 0, 0, .75),
-        0.025em 0.025em 0 rgba(0, 255, 0, .75),
-        -0.05em -0.05em 0 rgba(0, 0, 255, .75);
-    }
-    50% {
-      text-shadow: 
-        0.025em 0.05em 0 rgba(255, 0, 0, .75),
-        0.05em 0 0 rgba(0, 255, 0, .75),
-        0 -0.05em 0 rgba(0, 0, 255, .75);
-    }
-    99% {
-      text-shadow: 
-        0.025em 0.05em 0 rgba(255, 0, 0, .75),
-        0.05em 0 0 rgba(0, 255, 0, .75),
-        0 -0.05em 0 rgba(0, 0, 255, .75);
-    }
-  }
-
-  /* Main Title with Typing Effect */
-  .main-title {
-  font-family: 'Orbitron', monospace;
-  font-weight: 700;
-  font-size: 3rem;
-  text-align: center;
-  color:rgb(30, 2, 83);
-  letter-spacing: 0.1em;
-  text-shadow: 0 0 8px #ae81ff, 0 0 16pxrgb(51, 4, 139);
-  margin: 2rem 0;
-  position: relative;
-  z-index: 999; /* VERY high to stay above layers */
-}
-.retro-title {
+  /* Title Styles */
+  .retro-title {
   position: relative;
   font-family: 'Exo', sans-serif;
   font-size: clamp(2rem, 8vw, 5rem); /* responsive scaling */
@@ -172,55 +44,7 @@ order: 4
 }
 
 
-.retro-title .retro-front {
-  position: absolute;
-  left: 0;
-  top: 0;
-  background-image: linear-gradient(
-    #032d50 20%, 
-    #00a1ef 30%, 
-    white 45%, 
-  );
-  -webkit-text-stroke: 0.6px #94a0b9;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-
-z-index: 50 !important;
-  .main-title::before {
-    content: attr(data-text);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    color: #ff00ff;
-    z-index: -1;
-    filter: blur(3px);
-    animation: neon-flicker 3s ease-in-out infinite;
-  }
-
-  .main-title::after {
-    content: attr(data-text);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    color: #00ffff;
-    z-index: -2;
-    filter: blur(5px);
-    animation: neon-flicker 3s ease-in-out infinite reverse;
-  }
-
-  @keyframes neon-flicker {
-    0%, 100% { opacity: 1; transform: translateX(0); }
-    33% { opacity: 0.8; transform: translateX(2px); }
-    66% { opacity: 0.9; transform: translateX(-2px); }
-  }
-
-  /* Subtitle with Wave Effect */
+  /* Subtitle */
   .subtitle {
   text-align: center;
   font-family: 'Share Tech Mono', monospace;
@@ -236,18 +60,7 @@ z-index: 50 !important;
 }
 
 
-  .subtitle span {
-  display: inline-block;
-  /* no animation */
-}
-
-
-  @keyframes wave {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-  }
-
-  /* Profile Image with Simple Glow - Fixed Z-Index */
+  /* Profile Image */
   .about-img {
     width: 100%;
     max-width: 300px;
@@ -256,40 +69,10 @@ z-index: 50 !important;
     display: block;
     position: relative;
     z-index: 50;
-    border: 4px solid #ae81ff;
-    box-shadow: 
-      0 0 30px #ae81ff,
-      0 0 60px #ae81ff,
-      inset 0 0 30px rgba(174, 129, 255, 0.2);
-  }
-
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-20px); }
-  }
-
-  /* Interactive Laser Lines */
-  .laser-line {
-    position: absolute;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #ff00ff, transparent);
-    opacity: 0;
-    animation: laser-scan 4s ease-in-out infinite;
-    pointer-events: none;
-    z-index: 3;
-  }
-
-  @keyframes laser-scan {
-    0%, 100% { 
-      opacity: 0;
-      width: 0;
-      left: 50%;
-    }
-    50% {
-      opacity: 1;
-      width: 100%;
-      left: 0;
-    }
+    border: 2px solid #ae81ff;
+    box-shadow:
+      0 0 15px rgba(174, 129, 255, 0.4),
+      0 0 30px rgba(174, 129, 255, 0.2);
   }
 
   /* Image Gallery with 3D Cards - Better Mobile Support */
@@ -335,7 +118,6 @@ z-index: 50 !important;
     background: linear-gradient(45deg, #ff00ff, #00ffff, #ff00ff);
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     mask-composite: exclude;
-    animation: gradient-border 3s ease infinite;
     opacity: 0;
     transition: opacity 0.3s;
   }
@@ -402,37 +184,8 @@ z-index: 50 !important;
   background: linear-gradient(145deg, rgba(255, 0, 255, 0.2), rgba(0, 255, 255, 0.1));
   text-shadow: 0 0 5px #ff00ff;
   box-shadow: inset 0 0 5px rgba(255, 0, 255, 0.2);
-  transition: all 0.3s ease;
 }
 
-.highlight-inline:hover {
-  background: linear-gradient(145deg, rgba(0, 255, 255, 0.2), rgba(255, 0, 255, 0.1));
-  text-shadow: 0 0 7px #00ffff;
-  box-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
-}
-
-
-  @keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-  }
-
-  .highlight::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 3px;
-    background: linear-gradient(90deg, #ff00ff, #00ffff, #ff00ff);
-    background-size: 200% 100%;
-    animation: gradient-move 2s linear infinite;
-    transition: width 0.3s;
-  }
-
-  .highlight:hover::after {
-    width: 100%;
-  }
 
   /* Section Titles with Cyberpunk Style */
   .section-title,
@@ -455,7 +208,6 @@ z-index: 50 !important;
     padding-left: 40px !important;
     text-transform: uppercase !important;
     letter-spacing: 0.1em !important;
-    animation: gradient-move 4s linear infinite;
     z-index: 50 !important;
   }
 
@@ -517,48 +269,14 @@ z-index: 50 !important;
     }
   }
 
-  /* HR Styles with Energy Beam */
+  /* HR Styles */
   hr {
     border: none;
-    height: 4px;
-    background: #1a1a1a;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #ae81ff, transparent);
     margin: 4rem 0;
     position: relative;
-    overflow: visible;
     z-index: 50;
-  }
-
-  hr::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100px;
-    height: 100px;
-    background: radial-gradient(circle, #ae81ff 0%, transparent 70%);
-    opacity: 0.5;
-    animation: pulse 2s ease-in-out infinite;
-  }
-
-  hr::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, 
-      transparent, 
-      #ff00ff 20%, 
-      #00ffff 50%, 
-      #ff00ff 80%, 
-      transparent);
-    animation: beam-scan 3s linear infinite;
-  }
-
-  @keyframes beam-scan {
-    to { left: 100%; }
   }
 
   /* Paragraphs with better readability */
@@ -596,53 +314,11 @@ z-index: 50 !important;
     transform: scale(1.05);
   }
 
-  /* CRT Scan Line Effect - Behind Content */
-  .about-container::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: 
-      repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(255, 255, 255, 0.03) 2px,
-        rgba(255, 255, 255, 0.03) 4px
-      );
-    animation: scan-lines 8s linear infinite;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  @keyframes scan-lines {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(10px); }
-  }
-
-  /* Static Noise Overlay - Behind Content */
-  .about-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.03;
-    z-index: 1;
-    pointer-events: none;
-    background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" /></filter><rect width="100%" height="100%" filter="url(%23noise)" /></svg>');
-  }
 
   /* Mobile Responsive with Style */
   @media (max-width: 768px) {
     .about-container {
       padding: 1rem;
-    }
-    .main-title {
-      font-size: 2.5rem !important;
     }
     .section-title,
     .about-container h3 {
@@ -670,68 +346,13 @@ z-index: 50 !important;
     }
   }
 
-  /* Easter Egg - Konami Code */
-  .konami-activated {
-    animation: rainbow-bg 2s linear infinite;
-  }
-
-  @keyframes rainbow-bg {
-    0% { filter: hue-rotate(0deg); }
-    100% { filter: hue-rotate(360deg); }
-  }
-
-  /* Content wrapper to ensure proper layering */
-  .content-wrapper {
-    position: relative;
-    z-index: 50;
-  }
-
   /* Main content divs */
-  .about-container > div:not(.bg-layer):not(.laser-line) {
+  .about-container > div {
     position: relative;
     z-index: 50;
   }
-
-  /* Loading Animation */
-  @keyframes fade-in {
-    from {
-      opacity: 0;
-      transform: translateY(30px) scale(0.9);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-  }
-
-  .content-wrapper > * {
-    animation: fade-in 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-    opacity: 0;
-  }
-
-  /* Staggered animation with dynamic delays */
-  .content-wrapper > *:nth-child(1) { animation-delay: 0.1s; }
-  .content-wrapper > *:nth-child(2) { animation-delay: 0.2s; }
-  .content-wrapper > *:nth-child(3) { animation-delay: 0.3s; }
-  .content-wrapper > *:nth-child(4) { animation-delay: 0.4s; }
-  .content-wrapper > *:nth-child(5) { animation-delay: 0.5s; }
-  .content-wrapper > *:nth-child(6) { animation-delay: 0.6s; }
-  .content-wrapper > *:nth-child(7) { animation-delay: 0.7s; }
-  .content-wrapper > *:nth-child(8) { animation-delay: 0.8s; }
-  .content-wrapper > *:nth-child(9) { animation-delay: 0.9s; }
-  .content-wrapper > *:nth-child(10) { animation-delay: 1.0s; }
-  .content-wrapper > *:nth-child(11) { animation-delay: 1.1s; }
-  .content-wrapper > *:nth-child(12) { animation-delay: 1.2s; }
-  .content-wrapper > *:nth-child(13) { animation-delay: 1.3s; }
-  .content-wrapper > *:nth-child(14) { animation-delay: 1.4s; }
-  .content-wrapper > *:nth-child(15) { animation-delay: 1.5s; }
 
   /* Performance optimizations */
-  * {
-    will-change: auto;
-  }
-
-  .main-title,
   .about-img,
   .badge,
   .image-row img {
@@ -745,18 +366,6 @@ z-index: 50 !important;
 </style>
 
 <div class="about-container">
-  <!-- Background Layers -->
-  <div class="bg-layer stars"></div>
-  <div class="bg-layer gradient"></div>
-  <div class="bg-layer grid"></div>
-  
-
-
-  <!-- Laser Lines -->
-  <div class="laser-line" style="top: 20%; animation-delay: 0s;"></div>
-  <div class="laser-line" style="top: 50%; animation-delay: 1s;"></div>
-  <div class="laser-line" style="top: 80%; animation-delay: 2s;"></div>
-
   <div style="text-align: center; margin-bottom: 2rem;">
     <img src="/assets/img/mev3.jpg" alt="Jeremy Montes" class="about-img" />
   </div>
@@ -764,9 +373,6 @@ z-index: 50 !important;
   <h1 class="retro-title">
   <span class="retro-back">Jeremy Montes</span>
   </h1>
-  <div class="retro-grid"></div>
-  <div class="retro-lines"></div>
-
 
 
   <div class="subtitle">
@@ -786,12 +392,12 @@ z-index: 50 !important;
 
   <h3 class="section-title">Early Days</h3>
 
-  <p>I've been into hacking since I was 16. I started out by modifying games to unlock unreleased skins just to flex. In high school, I never really knew what career path I wanted. The funny part is I was always talking about tech, coding, or software projects without realizing that this was what I was meant to do. It finally clicked senior year.</p>
+  <p>I've been into "hacking" since I was 16. I started out by modifying games to unlock unreleased skins just to flex. In high school, I never really knew what career path I wanted. The funny part is I was always talking about tech, coding, or software projects without realizing that this was what I was meant to do. It finally clicked senior year.</p>
 
   <hr>
 
 <h3 class="section-title">Breaking into Cyber</h3>
-<p>Since then, I've earned my associate's degree in Computer Science with a focus on Networking & Security, and I'm continuing coursework in the same field. I'm planning to pursue a bachelor's degree in the same field with a focus on defensive security. I've attended nearly every major security event and conference in California, helped found the first Cybersecurity Club at my college (and became its representative), secured a SysOps/Security internship, won a few CTFs, picked up some certs like <code>Security+</code> and <code>CCNA</code>, and built tons of personal labs and projects. As far as certs go, I think they're useful for getting past HR filters, providing baseline knowledge, filling in gaps, and demonstrating commitment (especially for the harder exams), particularly early in your career. But once you have that foot in the door, I think what actually separates you from the thousands of other people with the same cert is whether you can actually do the work. I'd rather spend all my time spinning up labs, breaking/analyzing things, and building projects that prove I understand both the theory and practice. I learn security by doing security, not just studying for multiple-choice exams. Moving forward, I'm focused on pursuing certs that are hands-on and teach practical skills.</p>
+<p>Since then, I've earned my associate's degree in Computer Science with a focus on Networking & Security, and I'm continuing coursework in the same field. I'm planning to pursue a bachelor's degree in the same field with a focus on defensive security. I've attended nearly every major security event and conference in California, helped found the first Cybersecurity Club at my college (and became its representative), secured a SysOps/Security internship, won a few CTFs, picked up some certs like <code>Security+</code>, <code>PSAA</code> and <code>CCNA</code>, and built tons of personal labs and projects. As far as certs go, I think they're useful for getting past HR filters, providing baseline knowledge, filling in gaps, and demonstrating commitment (especially for the harder exams), particularly early in your career. But once you have that foot in the door, I think what actually separates you from the thousands of other people with the same cert is whether you can actually do the work. I'd rather spend all my time spinning up labs, breaking/analyzing things, and building projects that prove I understand both the theory and practice. I learn security by doing security, not just studying for multiple-choice exams. Moving forward, I'm focused on pursuing certs that are hands-on and teach practical skills.</p>
 
   <div class="image-row">
     <img src="https://i.postimg.cc/2ys8f3HQ/PXL-20250324-231930647.jpg"
@@ -804,7 +410,7 @@ z-index: 50 !important;
 
   <h3 class="section-title">What Keeps Me Going</h3>
 
-  <p>I'm not a genius, but I love figuring things out. Especially in security, that constant mystery combined with a cat and mouse game is what keeps me on my toes. That's why I've been obsessed with <span class="highlight highlight-inline">Malware Analysis</span> and <span class="highlight highlight-inline">Reverse Engineering</span>. Do I know what I'm looking at right away? Hell no. But do I love digging into it until it clicks and I find what I need? Absolutely.</p>
+  <p> I love figuring things out. Especially in security, that constant mystery combined with a cat and mouse game is what keeps me on my toes. That's why I've been obsessed with <span class="highlight highlight-inline">Malware Analysis</span> and <span class="highlight highlight-inline">Threat Hunting</span>.</p>
 
   <h4>Electronics and IoT</h4>
   <p>I was always into electronics, but things really clicked after finishing my Arduino internship at college. Once that wrapped up, I was hungry for more, so I grabbed a big electronics kit and dove into some books. At that point I was torn between going the electrical engineering/hardware route or sticking with computer science. But seeing how I could build practically anything with just copper, modules, and code - that really opened my eyes. I love building stuff, and electronics is where I get to show that off the most. After getting comfortable with schematics and working on my own projects, I naturally drifted into IoT security, radio frequency work, and started making my own hacking gadgets and PCBs.</p>
@@ -853,20 +459,6 @@ z-index: 50 !important;
 <script>
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
-  // Parallax Effect
-  document.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const parallax = document.querySelector('.bg-layer.grid');
-    const stars = document.querySelector('.bg-layer.stars');
-    
-    if (parallax) {
-      parallax.style.transform = `perspective(500px) rotateX(60deg) translateY(${50 + scrolled * 0.2}%) translateZ(${scrolled * 0.1}px)`;
-    }
-    if (stars) {
-      stars.style.transform = `translateY(${scrolled * 0.5}px)`;
-    }
-  });
-
   // Interactive Hover Effects for Images
   const setupImageHover = () => {
     // Check if device supports mouse events (not touch-only)
